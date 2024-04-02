@@ -1,4 +1,4 @@
-package com.example.jetpackcomposetutorial.authentication.login.view
+package com.example.jetpackcomposetutorial.presentation.authentication.login.view
 
 import GradientButton
 import android.content.res.Configuration

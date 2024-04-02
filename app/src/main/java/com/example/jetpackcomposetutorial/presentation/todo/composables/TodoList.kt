@@ -1,4 +1,4 @@
-package com.example.jetpackcomposetutorial.todo.composables
+package com.example.jetpackcomposetutorial.presentation.todo.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,7 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.jetpackcomposetutorial.data.todo.Todo
+import com.example.jetpackcomposetutorial.domain.model.Todo
 import com.example.jetpackcomposetutorial.ui.constants.CustomTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

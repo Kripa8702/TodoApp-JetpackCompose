@@ -1,7 +1,7 @@
-package com.example.jetpackcomposetutorial.todo.composables
+package com.example.jetpackcomposetutorial.presentation.todo.composables
 
+import AnimatedCheckbox
 import android.content.res.Configuration
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -21,17 +21,17 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jetpackcomposetutorial.R
-import com.example.jetpackcomposetutorial.data.todo.Todo
+import com.example.jetpackcomposetutorial.domain.model.Todo
 import com.example.jetpackcomposetutorial.ui.constants.CustomTheme
 import com.example.jetpackcomposetutorial.ui.constants.MediumDp
 
@@ -44,6 +44,8 @@ fun TodoItem(
     val textDecoration = if (todo.isDone) TextDecoration.LineThrough else null
 
     val iconId = if (todo.isDone) R.drawable.checked else R.drawable.unchecked
+
+    val isCheck = remember{ mutableStateOf(false) }
 
     CustomTheme {
         Card(
@@ -65,15 +67,8 @@ fun TodoItem(
                     }, verticalAlignment = Alignment.CenterVertically
 
             ) {
-                Image(
-                    painter = painterResource(id = iconId),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .weight(1.5f),
-                    colorFilter = ColorFilter.tint(
-                        color = MaterialTheme.colorScheme.onSecondary
-                    )
+                AnimatedCheckbox(
+                    modifier = Modifier.padding(10.dp),
                 )
                 Text(
                     text = todo.title,
