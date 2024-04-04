@@ -81,7 +81,7 @@ fun TodoInputBar(
                     keyboardActions = KeyboardActions(
                         onNext = {
                             onItemAdd(inputText.value)
-                            inputText.value= "fg"
+                            inputText.value= ""
                         }
                     ),
                     colors = TextFieldDefaults.colors(

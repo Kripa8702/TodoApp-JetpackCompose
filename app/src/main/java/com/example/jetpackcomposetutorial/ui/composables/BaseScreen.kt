@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -62,20 +61,18 @@ fun BaseScreen(
                 contentAlignment = Alignment.TopStart // Align content to top
             ) {
                 Box(
-                    modifier = Modifier.padding(horizontal = 12.dp)
+                    modifier = Modifier.padding(horizontal = 20.dp)
                 ) {
                     content()
                 }
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .padding(bottom = 14.dp),
+                        .padding(bottom = 5.dp),
                 ) {
                     bottomContent()
                 }
             }
-
-
         }
     }
 }

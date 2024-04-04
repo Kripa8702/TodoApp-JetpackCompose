@@ -2,7 +2,6 @@ package com.example.jetpackcomposetutorial.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposetutorial.ui.constants.poppinsFontFamily
@@ -13,6 +12,18 @@ val Typography = Typography(
         fontFamily = poppinsFontFamily,
         fontWeight = FontWeight.W500,
         fontSize = 42.sp,
+        letterSpacing = 1.5.sp
+    ),
+    headlineMedium = TextStyle(
+        fontFamily = poppinsFontFamily,
+        fontWeight = FontWeight.W500,
+        fontSize = 32.sp,
+        letterSpacing = 1.5.sp
+    ),
+    headlineSmall = TextStyle(
+        fontFamily = poppinsFontFamily,
+        fontWeight = FontWeight.W500,
+        fontSize = 24.sp,
         letterSpacing = 1.5.sp
     ),
     bodyLarge = TextStyle(
