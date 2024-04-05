@@ -2,11 +2,14 @@ package com.example.jetpackcomposetutorial.presentation.authentication.login.vie
 
 import GradientButton
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.rounded.MailOutline
@@ -37,44 +40,69 @@ fun LoginScreen(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    modifier = Modifier.padding(vertical = 40.dp),
-                    text = "Sign In",
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineLarge
-                )
-                Spacer(modifier = Modifier.height(120.dp))
-                CommonTextField(
-                    textFieldValue = emailText,
-                    onValueChange = { newText -> emailText.value = newText },
-                    hintText = "Email",
-                    imeAction = ImeAction.Next,
-                    leadingIcon = Icons.Rounded.MailOutline
-                )
-                Spacer(modifier = Modifier.height(40.dp))
-
-                CommonTextField(
-                    textFieldValue = passwordText,
-                    onValueChange = { newText -> passwordText.value = newText },
-                    hintText = "Password",
-                    imeAction = ImeAction.Done,
-                    leadingIcon = Icons.Outlined.Lock
-                )
-                Spacer(modifier = Modifier.height(60.dp))
                 Box(
-                    modifier = Modifier.padding(20.dp),
+                    modifier = Modifier.weight(0.5f),
+                    contentAlignment = Alignment.CenterStart
                 ) {
-                    GradientButton(text = "Continue")
+                    Text(
+                        text = "Sign In",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.headlineLarge
+                    )
                 }
-                Text(
-                    text = "Don't have an account? Sign Up",
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+//                Spacer(modifier = Modifier.weight(0.5f))
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    CommonTextField(
+                        textFieldValue = emailText,
+                        onValueChange = { newText -> emailText.value = newText },
+                        hintText = "Email",
+                        imeAction = ImeAction.Next,
+                        leadingIcon = Icons.Rounded.MailOutline
+                    )
+                    Spacer(modifier = Modifier.height(40.dp))
+
+                    CommonTextField(
+                        textFieldValue = passwordText,
+                        onValueChange = { newText -> passwordText.value = newText },
+                        hintText = "Password",
+                        imeAction = ImeAction.Done,
+                        leadingIcon = Icons.Outlined.Lock
+                    )
+                }
+
 
             }
         },
+        bottomContent = {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                GradientButton(text = "Continue")
+                Row(
+                ) {
+                    Text(
+                        text = "Don't have an account? ",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Text(
+                        modifier = Modifier
+                            .clickable {
+
+                            },
+                        text = "Sign Up",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                }
+            }
+        }
     )
 
 }
