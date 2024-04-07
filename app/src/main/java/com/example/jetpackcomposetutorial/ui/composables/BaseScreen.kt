@@ -28,6 +28,7 @@ fun BaseScreen(
     showBackButton: Boolean = true,
     appBarTitle: String = "",
     actions: @Composable RowScope.() -> Unit = {},
+    enableFocusDisable: Boolean = true,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
@@ -41,8 +42,10 @@ fun BaseScreen(
                     },
                     indication = null
                 ) {
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
+                    if (enableFocusDisable) {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    }
                 },
             topBar = {
                 CustomTopAppBar(
@@ -56,19 +59,20 @@ fun BaseScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(MaterialTheme.colorScheme.background)
-                    .imePadding()
                     .padding(innerPadding),
                 contentAlignment = Alignment.TopStart // Align content to top
             ) {
                 Box(
-                    modifier = Modifier.padding(horizontal = 20.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .imePadding()
                 ) {
                     content()
                 }
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .padding(bottom = 5.dp),
+//                        .padding(bottom = 10.dp),
                 ) {
                     bottomContent()
                 }

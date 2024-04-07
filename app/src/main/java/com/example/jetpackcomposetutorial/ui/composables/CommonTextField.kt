@@ -5,8 +5,13 @@ import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -16,10 +21,10 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -29,10 +34,11 @@ fun CommonTextField(
     textFieldValue: MutableState<TextFieldValue>,
     onValueChange: (TextFieldValue) -> Unit = {},
     hintText: String = "",
-    imeAction: ImeAction = ImeAction.Done,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(),
+    keyboardActions: KeyboardActions = KeyboardActions(),
     leadingIcon: ImageVector? = null,
 ) {
-    var isVisible = remember { mutableStateOf(false) }
+    val isVisible = remember { mutableStateOf(false) }
 
     val interactionSource = remember {
         MutableInteractionSource()
@@ -53,19 +59,33 @@ fun CommonTextField(
                 Icon(
                     modifier = Modifier.padding(horizontal = 20.dp),
                     imageVector = leadingIcon,
-                    //make secondary color when textfield focussed
-                    tint = if(isFocused.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
-                    contentDescription = "")
+                    tint = if (isFocused.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface.copy(
+                        alpha = 0.4f
+                    ),
+                    contentDescription = ""
+                )
         },
+
+        visualTransformation = if (!isPassword || isVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
-//                       if(isPassword){
-//                            Icon(
-//                                 imageVector = if(isVisible.value) Icons.Filled.vis else Icons.Default.VisibilityOff,
-//                                 contentDescription = "Toggle Password Visibility",
-//                                 tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
-//                                 modifier = Modifier.padding(horizontal = 20.dp).padding(end = 10.dp).height(20.dp)
-//                            )
-//                       }
+            val image = if (isVisible.value)
+                Icons.Filled.Visibility
+            else Icons.Filled.VisibilityOff
+
+            val description = if (isVisible.value) "Hide password" else "Show password"
+            if (isPassword) {
+                IconButton(
+                    modifier = Modifier.padding(horizontal = 10.dp),
+                    onClick = { isVisible.value = !isVisible.value }) {
+                    Icon(
+                        imageVector = image,
+                        tint = if (isFocused.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface.copy(
+                            alpha = 0.4f
+                        ),
+                        contentDescription = description
+                    )
+                }
+            }
         },
         placeholder = {
             Text(
@@ -73,11 +93,13 @@ fun CommonTextField(
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
             )
         },
-        keyboardOptions = KeyboardOptions(imeAction = imeAction),
+
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
 
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = MaterialTheme.colorScheme.secondary,
-            unfocusedBorderColor = Color.Transparent,
+            unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
             focusedContainerColor = MaterialTheme.colorScheme.surface,
             unfocusedContainerColor = MaterialTheme.colorScheme.surface,
             focusedTextColor = MaterialTheme.colorScheme.secondary,

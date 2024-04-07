@@ -2,9 +2,9 @@ package com.example.jetpackcomposetutorial.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.jetpackcomposetutorial.data.dao.TodoDao
-import com.example.jetpackcomposetutorial.data.database.TodoDatabase
-import com.example.jetpackcomposetutorial.data.repository.TodoRepositoryImpl
+import com.example.jetpackcomposetutorial.data.todo.TodoDao
+import com.example.jetpackcomposetutorial.data.todo.TodoDatabase
+import com.example.jetpackcomposetutorial.data.todo.TodoRepositoryImpl
 import com.example.jetpackcomposetutorial.domain.repository.TodoRepository
 import dagger.Module
 import dagger.Provides

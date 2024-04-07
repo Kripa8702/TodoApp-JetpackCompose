@@ -1,6 +1,5 @@
-package com.example.jetpackcomposetutorial.data.repository
+package com.example.jetpackcomposetutorial.data.todo
 
-import com.example.jetpackcomposetutorial.data.dao.TodoDao
 import com.example.jetpackcomposetutorial.domain.model.Todo
 import com.example.jetpackcomposetutorial.domain.repository.TodoRepository
 import kotlinx.coroutines.flow.Flow

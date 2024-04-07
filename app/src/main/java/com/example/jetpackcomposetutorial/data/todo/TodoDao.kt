@@ -1,6 +1,6 @@
 @file:Suppress("AndroidUnresolvedRoomSqlReference")
 
-package com.example.jetpackcomposetutorial.data.dao
+package com.example.jetpackcomposetutorial.data.todo
 
 import androidx.room.Dao
 import androidx.room.Delete
