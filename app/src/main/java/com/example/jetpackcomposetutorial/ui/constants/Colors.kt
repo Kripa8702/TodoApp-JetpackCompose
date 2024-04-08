@@ -8,6 +8,7 @@ val DarkBlue700 = Color(0xff151434)
 
 //val Accent = Color(0xff8EBBFF)
 val Accent = Color(0xFF4B96F3)
+val DarkAccent = Color(0xFF3e4ff7)
 val WhiteColor = Color(0xfff4f5fc)
 val DarkBlue500 = Color(0xff1f1d4c)
 
