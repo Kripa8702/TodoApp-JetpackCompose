@@ -36,7 +36,6 @@ fun LoginScreen() {
 
 
     BaseScreen(
-        enableFocusDisable = false,
         content = {
             Column(
             ) {

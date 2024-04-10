@@ -41,7 +41,6 @@ fun RegisterScreen() {
     val confirmPasswordText = remember { mutableStateOf(TextFieldValue()) }
 
     BaseScreen(
-//        enableFocusDisable = false,
         content = {
             Column {
                 Box(
