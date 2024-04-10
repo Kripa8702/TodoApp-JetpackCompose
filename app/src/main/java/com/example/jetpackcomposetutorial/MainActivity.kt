@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.jetpackcomposetutorial.presentation.authentication.login.view.LoginScreen
+import com.example.jetpackcomposetutorial.presentation.todo.view.TodoListScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-           LoginScreen()
+           TodoListScreen()
         }
     }
 }

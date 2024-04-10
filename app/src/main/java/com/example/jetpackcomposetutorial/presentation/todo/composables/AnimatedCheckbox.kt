@@ -19,16 +19,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.jetpackcomposetutorial.domain.model.Todo
 
 @Composable
 fun AnimatedCheckbox(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isChecked: Boolean = false,
 ) {
-    var checked by remember { mutableStateOf(false) }
 
     // Define the color for the checkbox background
     val checkboxColor by animateColorAsState(
-        targetValue = if (checked) Color.White else MaterialTheme.colorScheme.secondary,
+        targetValue = if (isChecked) Color.White else MaterialTheme.colorScheme.secondary,
         animationSpec = tween(durationMillis = 200), label = "checkbox"
     )
 
@@ -45,9 +46,8 @@ fun AnimatedCheckbox(
                     shape = CircleShape
                 )
                 .padding(2.dp)
-                .clickable { checked = !checked }
         ) {
-            if (checked) {
+            if (isChecked) {
                 Icon(
                     imageVector = Icons.Default.Check,
                     contentDescription = null,

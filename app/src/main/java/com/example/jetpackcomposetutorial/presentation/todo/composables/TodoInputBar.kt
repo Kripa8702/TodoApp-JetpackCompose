@@ -106,7 +106,10 @@ fun TodoInputBar(
 
                     ),
                     shape = RoundedCornerShape(size = WidgetRoundedCornerDp),
-                    onClick = { onItemAdd(inputText.value) }) {
+                    onClick = {
+                        onItemAdd(inputText.value)
+                        inputText.value= ""
+                    }) {
                     Icon(
                         modifier = Modifier.padding(12.dp),
                         painter = painterResource(id = R.drawable.add),

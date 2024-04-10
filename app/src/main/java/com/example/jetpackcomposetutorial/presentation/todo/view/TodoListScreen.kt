@@ -1,7 +1,9 @@
 package com.example.jetpackcomposetutorial.presentation.todo.view
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.jetpackcomposetutorial.presentation.todo.composables.TodoInputBar
 import com.example.jetpackcomposetutorial.presentation.todo.composables.TodoList
@@ -19,22 +21,29 @@ fun TodoListScreen(
         showBackButton = false,
         appBarTitle = "My Todos",
         content = {
-            TodoList(
-                todoItems = flowOf(
-                    todoItems.value
-                ),
-                onItemClick = {},
-                onDelete = { todo ->
-                    viewModel.removeTodo(todo = todo)
-                },
-
-                )
-        },
-        bottomContent = {
-            TodoInputBar { title ->
-                viewModel.addTodo(title = title)
+            Column {
+                TodoList(
+                    modifier = Modifier.weight(10f),
+                    todoItems = flowOf(
+                        todoItems.value
+                    ),
+                    onItemClick = {
+                        viewModel.toggleTodo(todo = it)
+                    },
+                    onDelete = { todo ->
+                        viewModel.removeTodo(todo = todo)
+                    },
+                    )
+                TodoInputBar{ title ->
+                    viewModel.addTodo(title = title)
+                }
             }
         }
+//        bottomContent = {
+//            TodoInputBar { title ->
+//                viewModel.addTodo(title = title)
+//            }
+//        }
     )
 }
 

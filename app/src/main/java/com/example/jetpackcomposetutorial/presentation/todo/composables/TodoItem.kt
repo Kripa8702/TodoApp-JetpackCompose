@@ -43,9 +43,7 @@ fun TodoItem(
 ) {
     val textDecoration = if (todo.isDone) TextDecoration.LineThrough else null
 
-    val iconId = if (todo.isDone) R.drawable.checked else R.drawable.unchecked
-
-    val isCheck = remember{ mutableStateOf(false) }
+     val isCheck = remember{ mutableStateOf(false) }
 
     CustomTheme {
         Card(
@@ -57,7 +55,7 @@ fun TodoItem(
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.secondary)
+                    .background(if(todo.isDone) MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f) else MaterialTheme.colorScheme.secondary)
                     .clickable(
                         interactionSource = remember {
                             MutableInteractionSource()
@@ -69,6 +67,7 @@ fun TodoItem(
             ) {
                 AnimatedCheckbox(
                     modifier = Modifier.padding(10.dp),
+                    isChecked = todo.isDone,
                 )
                 Text(
                     text = todo.title,
