@@ -26,16 +26,25 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.jetpackcomposetutorial.navigation.AppNavigation
+import com.example.jetpackcomposetutorial.presentation.authentication.viewmodel.AuthenticationViewModel
 import com.example.jetpackcomposetutorial.ui.composables.BaseScreen
 import com.example.jetpackcomposetutorial.ui.composables.CommonTextField
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    viewModel: AuthenticationViewModel = hiltViewModel(),
+    navController: NavController
+) {
     val emailText = remember { mutableStateOf(TextFieldValue()) }
     val passwordText = remember { mutableStateOf(TextFieldValue()) }
 
 
     BaseScreen(
+        navController = navController,
         content = {
             Column(
             ) {
@@ -52,16 +61,14 @@ fun LoginScreen() {
                     )
                 }
                 Column(
-                    modifier = Modifier
-                        .weight(0.7f)
+                    modifier = Modifier.weight(0.7f)
                 ) {
                     CommonTextField(
                         textFieldValue = emailText,
                         onValueChange = { newText -> emailText.value = newText },
                         hintText = "Email",
                         keyboardOptions = KeyboardOptions(
-                            imeAction = ImeAction.Next,
-                            keyboardType = KeyboardType.Email
+                            imeAction = ImeAction.Next, keyboardType = KeyboardType.Email
                         ),
                         leadingIcon = Icons.Rounded.MailOutline
                     )
@@ -73,8 +80,7 @@ fun LoginScreen() {
                         onValueChange = { newText -> passwordText.value = newText },
                         hintText = "Password",
                         keyboardOptions = KeyboardOptions(
-                            imeAction = ImeAction.Done,
-                            keyboardType = KeyboardType.Password
+                            imeAction = ImeAction.Done, keyboardType = KeyboardType.Password
                         ),
                         leadingIcon = Icons.Outlined.Lock
                     )
@@ -84,15 +90,21 @@ fun LoginScreen() {
         },
 
         bottomContent = {
-            Column (
-                modifier = Modifier
-                    .padding(horizontal = 20.dp)
-            ){
-                GradientButton(
-                    text = "Login",
-                )
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp)
+            ) {
+                GradientButton(text = "Login", onClick = {
+                    viewModel.signIn(emailText.value.text, passwordText.value.text)
+
+                    if(viewModel.authenticated.value == true){
+                        navController.navigate(AppNavigation.TodoListScreen.route) {
+                            popUpTo("authentication") { inclusive = true }
+                        }
+                    }
+                })
                 Row(
-                    modifier = Modifier.padding(top = 20.dp, bottom = 50.dp)
+                    modifier = Modifier
+                        .padding(top = 20.dp, bottom = 50.dp)
                         .align(Alignment.CenterHorizontally)
                 ) {
                     Text(
@@ -104,7 +116,7 @@ fun LoginScreen() {
                     Text(
                         modifier = Modifier
                             .clickable {
-
+                                navController.navigate(AppNavigation.RegisterScreen.route)
                             },
                         text = "Sign Up",
                         textAlign = TextAlign.Center,
@@ -113,13 +125,14 @@ fun LoginScreen() {
                     )
                 }
             }
-        }
-    )
+        })
 
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    LoginScreen(
+        navController = rememberNavController()
+    )
 }

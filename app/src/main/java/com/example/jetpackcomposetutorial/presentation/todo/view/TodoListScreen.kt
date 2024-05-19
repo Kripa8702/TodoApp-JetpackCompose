@@ -11,10 +11,13 @@ import com.example.jetpackcomposetutorial.presentation.todo.viewmodel.TodoViewMo
 import com.example.jetpackcomposetutorial.ui.composables.BaseScreen
 import kotlinx.coroutines.flow.flowOf
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun TodoListScreen(
-    viewModel: TodoViewModel = hiltViewModel()
+    viewModel: TodoViewModel,
+    navController: NavController
 ) {
     val todoItems = viewModel.allTodos.collectAsState(initial = emptyList())
     BaseScreen(
@@ -51,5 +54,7 @@ fun TodoListScreen(
 @Composable
 fun TodoListScreenPreview() {
     TodoListScreen(
+        viewModel = hiltViewModel(),
+        navController = rememberNavController()
     )
 }

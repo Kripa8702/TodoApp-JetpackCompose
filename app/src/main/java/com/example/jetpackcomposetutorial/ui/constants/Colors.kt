@@ -23,5 +23,5 @@ val LightSurface = Color(0xffffffff)
 // Blue Gradient
 val BlueGradient = listOf(
     Color(0xFF30a1e8),
-    Color(0xFF3e4ff7)
+    DarkAccent
 )

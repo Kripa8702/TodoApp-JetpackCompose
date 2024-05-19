@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.jetpackcomposetutorial.ui.constants.CustomTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -29,32 +30,33 @@ fun BaseScreen(
     appBarTitle: String = "",
     actions: @Composable RowScope.() -> Unit = {},
     enableFocusDisable: Boolean = true,
+    navController: NavController? = null
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
 
     CustomTheme {
-        Scaffold(
-            modifier = Modifier
-                .clickable(
-                    interactionSource = remember {
-                        MutableInteractionSource()
-                    },
-                    indication = null
-                ) {
-                    if (enableFocusDisable) {
-                        keyboardController?.hide()
-                        focusManager.clearFocus()
-                    }
-                },
-            topBar = {
-                CustomTopAppBar(
-                    showBackButton = showBackButton,
-                    title = appBarTitle,
-                    actions = actions,
-                )
-            }
-        ) { innerPadding ->
+        Scaffold(modifier = Modifier.clickable(
+                interactionSource = remember {
+                    MutableInteractionSource()
+                }, indication = null
+            ) {
+                if (enableFocusDisable) {
+                    keyboardController?.hide()
+                    focusManager.clearFocus()
+                }
+            }, topBar = {
+
+            CustomTopAppBar(showBackButton = showBackButton,
+                title = appBarTitle,
+                actions = actions,
+                onPop = {
+                    navController?.popBackStack()
+                }
+
+            )
+
+        }) { innerPadding ->
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -70,8 +72,7 @@ fun BaseScreen(
                     content()
                 }
                 Box(
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
+                    modifier = Modifier.align(Alignment.BottomCenter)
 //                        .padding(bottom = 10.dp),
                 ) {
                     bottomContent()

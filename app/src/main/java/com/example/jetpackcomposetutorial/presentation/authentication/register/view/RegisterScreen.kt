@@ -30,17 +30,27 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.jetpackcomposetutorial.navigation.AppNavigation
+import com.example.jetpackcomposetutorial.presentation.authentication.viewmodel.AuthenticationViewModel
 import com.example.jetpackcomposetutorial.ui.composables.BaseScreen
 import com.example.jetpackcomposetutorial.ui.composables.CommonTextField
 
 @Composable
-fun RegisterScreen() {
+fun RegisterScreen(
+    viewModel: AuthenticationViewModel,
+    navController: NavController
+) {
     val fullNameText = remember { mutableStateOf(TextFieldValue()) }
     val emailText = remember { mutableStateOf(TextFieldValue()) }
     val passwordText = remember { mutableStateOf(TextFieldValue()) }
     val confirmPasswordText = remember { mutableStateOf(TextFieldValue()) }
 
     BaseScreen(
+        navController = navController,
         content = {
             Column {
                 Box(
@@ -123,6 +133,17 @@ fun RegisterScreen() {
             ) {
                 GradientButton(
                     text = "Continue",
+                    onClick = {
+//                        viewModel.register(
+//                            fullName = fullNameText.value.text,
+//                            email = emailText.value.text,
+//                            password = passwordText.value.text,
+//                            confirmPassword = confirmPasswordText.value.text
+//                        )
+                        navController.navigate(AppNavigation.TodoListScreen.route) {
+                            popUpTo("authentication") { inclusive = true }
+                        }
+                    }
                 )
                 Row(
                     modifier = Modifier
@@ -138,7 +159,7 @@ fun RegisterScreen() {
                     Text(
                         modifier = Modifier
                             .clickable {
-
+                                navController.navigate(AppNavigation.LoginScreen.route)
                             },
                         text = "Sign In",
                         textAlign = TextAlign.Center,
@@ -155,5 +176,8 @@ fun RegisterScreen() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen()
+    RegisterScreen(
+        viewModel = hiltViewModel(),
+        navController = rememberNavController()
+    )
 }

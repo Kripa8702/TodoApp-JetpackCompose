@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,6 +27,7 @@ fun CustomTopAppBar(
     title: String,
     actions: @Composable RowScope.() -> Unit = {},
     showBackButton: Boolean = true,
+    onPop : () -> Unit = {}
 ) {
     TopAppBar(
         modifier = Modifier.padding(top = 8.dp),
@@ -47,7 +49,7 @@ fun CustomTopAppBar(
             if (showBackButton) {
                 IconButton(
                     modifier = Modifier.padding(horizontal = 10.dp).height(20.dp),
-                    onClick = {}
+                    onClick = onPop
                 ) {
                     Icon(
                         Icons.Rounded.ArrowBackIosNew,
